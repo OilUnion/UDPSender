@@ -156,7 +156,6 @@ class Sender {
             InetAddress address = InetAddress.getByName(host);
             for (byte[] packet : packets) {
                 socket.send(new DatagramPacket(packet, packet.length, address, port));
-                TimeUnit.MILLISECONDS.sleep(1);  // Задержка между отправками.
             }
         } catch (IOException | InterruptedException e) {
             System.err.println("Error sending packets: " + e.getMessage());
