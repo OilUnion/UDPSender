@@ -17,18 +17,10 @@ public class UIntegrationSendViaUDP {
     // Порт сервера.
     final private static final int PORT = 12345;
 
-    // Наименовани заказа.
-    private static final String COL_NAME_ORDER_ID = "u_integration.auftrag_nr";
-    // Сообщение.
-    private static final String COL_NAME_ORDER_MESSAGE = "u_integration.message";
-    // Тип сообщения. txt, file, т.д.
-    private static final String COL_NAME_TYPE = "u_integration.type";
-
     public static void main(String[] args) throws IOException {
         final String orderId = "Test";
-        //final String message = "test";
+        final String message = "test";
         final String type = "Test";
-        File file = new File("/home/user/Downloads/DropMeFiles_Ri2os/1.pdf");
         final String message = Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath()));;
         Sender Sender = new Sender(HOST, PORT);
         byte[] messageData = message.getBytes();
@@ -43,8 +35,6 @@ public class UIntegrationSendViaUDP {
 // Служит для разбиения данных на массив.
 class DatagramPacketsCreator {
     // Ограничение передачи по UDP протоколу 65 507 байт
-    // Для точного избежания ошибок по размеру используется : 63 000 байт
-    // Для доп информации, например префикса и т.д. оставлено 2 000 байт
     public static final int MAX_PACKET_SIZE = 65_000;
 
     private final DataHeader dataHeader;
