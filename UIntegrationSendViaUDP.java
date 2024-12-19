@@ -46,7 +46,6 @@ class DatagramPacketsCreator {
     // Для точного избежания ошибок по размеру используется : 63 000 байт
     // Для доп информации, например префикса и т.д. оставлено 2 000 байт
     public static final int MAX_PACKET_SIZE = 31_500;
-    public static final int MAX_PACKET_HEADER_SIZE = 2_000;
 
     private final DataHeader dataHeader;
     private final byte[] messageData;
