@@ -1,27 +1,23 @@
-package u_integration;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.nio.file.Files;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.zip.CRC32;
 
 //Основной класс
 public class UIntegrationSendViaUDP {
     // Адрес сервера.
-    final private final String HOST = "127.0.0.1";
+    static final private String HOST = "127.0.0.1";
     // Порт сервера.
-    final private static final int PORT = 12345;
+    final private static int PORT = 12345;
 
     public static void main(String[] args) throws IOException {
+        UDPSender udpSender = new UDPSender(HOST, PORT, "message");
         final String orderId = "Test";
         final String message = "test";
         final String type = "Test";
-        final String message = Base64.getEncoder().encodeToString(Files.readAllBytes(file.toPath()));;
         Sender Sender = new Sender(HOST, PORT);
         byte[] messageData = message.getBytes();
         String guid = new UniqueldentifierGenerator().getGUID();
@@ -146,7 +142,7 @@ class Sender {
             for (byte[] packet : packets) {
                 socket.send(new DatagramPacket(packet, packet.length, address, port));
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             System.err.println("Error sending packets: " + e.getMessage());
         }
     }
