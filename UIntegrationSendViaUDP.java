@@ -13,7 +13,7 @@ public class UIntegrationSendViaUDP {
     // Порт сервера.
     final private static int PORT = 12345;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         UDPSender udpSender = new UDPSender(HOST, PORT, "message");
         final String orderId = "Test";
         final String message = "test";

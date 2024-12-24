@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UDPSender {
@@ -10,63 +11,62 @@ public class UDPSender {
     private final Object message;
     private String flag = null;
     private int datagramSize = 65_000;
-    private String additionalData = null;
+    private String additionalDataAsString = null;
 
-    private IMessageTypeConverter messageTypeConverter;
-    private List<byte[]> messageSegments;
+    private IMessageTypeHandler messageTypeHandler;
+    private List<byte[]> messageSegments = new ArrayList<>();
 
-    public UDPSender (String address, int port, Object message) {
+    public UDPSender (String address, int port, Object message) throws Exception {
         this.address = address;
         this.port = port;
         this.message = message;
+        this.messageTypeHandler = identifyType();
     }
 
-    public UDPSender (String address, int port, Object message, int datagramSize) {
-        this.address = address;
-        this.port = port;
-        this.message = message;
-        this.datagramSize = datagramSize;
-    }
-
-    public UDPSender (String address, int port, Object message, String flag) {
-        this.address = address;
-        this.port = port;
-        this.message = message;
-        this.flag = flag;
-    }
-
-    public UDPSender (String address, int port, Object message, int datagramSize, String flag) {
+    public UDPSender (String address, int port, Object message, int datagramSize) throws Exception {
         this.address = address;
         this.port = port;
         this.message = message;
         this.datagramSize = datagramSize;
-        this.flag = flag;
+        this.messageTypeHandler = identifyType();
     }
 
-    public UDPSender (String address, int port, Object message, int datagramSize, String flag, String additionalData) {
+    public UDPSender (String address, int port, Object message, String flag) throws Exception {
+        this.address = address;
+        this.port = port;
+        this.message = message;
+        this.flag = flag;
+        this.messageTypeHandler = identifyType();
+    }
+
+    public UDPSender (String address, int port, Object message, int datagramSize, String flag) throws Exception {
         this.address = address;
         this.port = port;
         this.message = message;
         this.datagramSize = datagramSize;
         this.flag = flag;
-        this.additionalData = additionalData;
+        this.messageTypeHandler = identifyType();
     }
 
-    private void IdentifyType (Object message, String flag) throws Exception {
-        if (message instanceof String && flag == null) {
-            this.messageTypeConverter = new StringMessageTypeConverter((String) message);
-        } else if (message instanceof String && flag.equals("1C")) {
-            this.messageTypeConverter = new OneCStringMessageTypeConverter((String) message);
+    public UDPSender (String address, int port, Object message, int datagramSize, String flag, String additionalDataAsString) throws Exception {
+        this.address = address;
+        this.port = port;
+        this.message = message;
+        this.datagramSize = datagramSize;
+        this.flag = flag;
+        this.additionalDataAsString = additionalDataAsString;
+        this.messageTypeHandler = identifyType();
+    }
+
+    private IMessageTypeHandler identifyType () throws Exception {
+        if (this.message instanceof String && this.flag == null) {
+            return new StringMessageTypeHandler(this.message);
+        } else if (this.message instanceof String && this.flag.equals("1C")) {
+            return new OneCStringMessageTypeHandler(this.message, this.additionalDataAsString);
         }
         else {
             throw new Exception("Тип неопределен.");
         }
-    }
-
-    private void executeChainOfResponsibilitiees() {
-       byte[] messageAsByteArray =  this.messageTypeConverter.toByteArray();
-       MessageSplitter messageSplitter = new MessageSplitter(messageAsByteArray);
-       this.messageSegments = messageSplitter.split();
     }
 
     public void send () throws IOException {
