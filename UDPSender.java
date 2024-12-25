@@ -16,46 +16,10 @@ public class UDPSender {
     private IMessageTypeHandler messageTypeHandler;
     private List<byte[]> messageSegments = new ArrayList<>();
 
-    public UDPSender (String address, int port, Object message) throws Exception {
+    public UDPSender (String address, int port, List<byte[]> message) {
         this.address = address;
         this.port = port;
         this.message = message;
-        this.messageTypeHandler = identifyType();
-    }
-
-    public UDPSender (String address, int port, Object message, int datagramSize) throws Exception {
-        this.address = address;
-        this.port = port;
-        this.message = message;
-        this.datagramSize = datagramSize;
-        this.messageTypeHandler = identifyType();
-    }
-
-    public UDPSender (String address, int port, Object message, String flag) throws Exception {
-        this.address = address;
-        this.port = port;
-        this.message = message;
-        this.flag = flag;
-        this.messageTypeHandler = identifyType();
-    }
-
-    public UDPSender (String address, int port, Object message, int datagramSize, String flag) throws Exception {
-        this.address = address;
-        this.port = port;
-        this.message = message;
-        this.datagramSize = datagramSize;
-        this.flag = flag;
-        this.messageTypeHandler = identifyType();
-    }
-
-    public UDPSender (String address, int port, Object message, int datagramSize, String flag, String additionalDataAsString) throws Exception {
-        this.address = address;
-        this.port = port;
-        this.message = message;
-        this.datagramSize = datagramSize;
-        this.flag = flag;
-        this.additionalDataAsString = additionalDataAsString;
-        this.messageTypeHandler = identifyType();
     }
 
     private IMessageTypeHandler identifyType () throws Exception {

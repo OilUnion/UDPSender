@@ -9,16 +9,16 @@ import java.util.zip.CRC32;
 //Основной класс
 public class UIntegrationSendViaUDP {
     // Адрес сервера.
-    static final private String HOST = "127.0.0.1";
+    private final String HOST = "127.0.0.1";
     // Порт сервера.
-    final private static int PORT = 12345;
+    private final int PORT = 12345;
 
-    public static void main(String[] args) throws Exception {
-        UDPSender udpSender = new UDPSender(HOST, PORT, "message");
+    public void main(String[] args) throws Exception {
+        UDPSender udpSender = new UDPSender(this.HOST, this.PORT, new ArrayList<byte[]>(List.of("fe".getBytes())));
         final String orderId = "Test";
         final String message = "test";
         final String type = "Test";
-        Sender Sender = new Sender(HOST, PORT);
+        Sender Sender = new Sender(this.HOST, this.PORT);
         byte[] messageData = message.getBytes();
         String guid = new UniqueldentifierGenerator().getGUID();
         DataHeader header = new DataHeader(guid, type, orderId);
