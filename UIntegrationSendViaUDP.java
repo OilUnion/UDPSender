@@ -8,6 +8,8 @@ import java.util.zip.CRC32;
 
 //Основной класс
 public class UIntegrationSendViaUDP {
+
+    // 65507 - Максимальный размер пакета.
     // Адрес сервера.
     private final String HOST = "127.0.0.1";
     // Порт сервера.
