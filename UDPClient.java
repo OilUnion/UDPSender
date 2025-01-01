@@ -4,18 +4,18 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.List;
 
-public class UDPSender implements ISender {
+public class UDPClient implements ISend {
     private final String address;
     private final int port;
     private final List<byte[]> messagePackets;
 
-    public UDPSender (String address, int port, List<byte[]> messagePackets) {
+    public UDPClient(String address, int port, List<byte[]> messagePackets) {
         this.address = address;
         this.port = port;
         this.messagePackets = messagePackets;
     }
 
-    public void send () throws IOException {
+    public void send() throws IOException {
         try (DatagramSocket socket = new DatagramSocket()) {
             InetAddress address = InetAddress.getByName(this.address);
             for (byte[] segment : this.messagePackets) {

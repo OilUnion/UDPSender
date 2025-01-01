@@ -10,7 +10,7 @@ public class OneCStringMessageTypeHandler implements IMessageTypeHandler {
     @Override
     public List<byte[]> getMessageSegments() {
         byte[] messageAsByteArray =  new MessageTypeConverter(this.message).toByteArray();
-        MessageSplitter messageSplitter = new MessageSplitter(messageAsByteArray);
-        return messageSplitter.split();
+        DefaultMessageSplitter defaultMessageSplitter = new DefaultMessageSplitter(messageAsByteArray);
+        return defaultMessageSplitter.split();
     }
 }

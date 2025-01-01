@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+//TODO: Переименовать.
+public class DefaultMessageSplitter implements ISplit {
+    private final int dataSegmentSize;
+    private final byte[] data;
+
+    public DefaultMessageSplitter(byte[] data) {
+        this.data = data;
+        this.dataSegmentSize = 65_000;
+    }
+
+    public DefaultMessageSplitter(byte[] data, int dataSegmentSize) {
+       this.data = data;
+       this.dataSegmentSize = dataSegmentSize;
+    }
+
+    @Override
+    public List<byte[]> split() {
+        if (this.data == null || this.dataSegmentSize == 0) {
+            return new ArrayList<>();
+        }
+        int dataSegmentSizeAsUint = Math.abs(this.dataSegmentSize);
+        int segmentCount = (int) Math.ceil(((double) this.data.length / dataSegmentSizeAsUint) + 0.1);
+        return splitDataIntoSegments(new ArrayList<>(), segmentCount);
+    }
+
+    private List<byte[]> splitDataIntoSegments(List<byte[]> segments, int segmentCount) {
+        for (int i = 0; i < segmentCount; i++) {
+            int start = i * (this.data.length / segmentCount);
+            int end = (i == segmentCount - 1) ? this.data.length : (i + 1) * (this.data.length / segmentCount);
+            segments.add(Arrays.copyOfRange(this.data, start, end));
+        }
+        return segments;
+    }
+}

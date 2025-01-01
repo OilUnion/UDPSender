@@ -16,7 +16,8 @@ public class UIntegrationSendViaUDP {
     private final int PORT = 12345;
 
     public void main(String[] args) throws Exception {
-        UDPSender udpSender = new UDPSender(this.HOST, this.PORT, new ArrayList<byte[]>(List.of("fe".getBytes())));
+        UDPClient udpClient = new UDPClient(this.HOST, this.PORT, new ArrayList<byte[]>(List.of("fe".getBytes())));
+        udpClient.send();
         final String orderId = "Test";
         final String message = "test";
         final String type = "Test";
