@@ -1,5 +1,5 @@
 import java.util.List;
 
-public interface ISplit {
+public interface ISplitable {
     List<byte[]> split();
 }

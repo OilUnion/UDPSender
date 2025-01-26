@@ -1,4 +1,4 @@
-
+/*
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -16,8 +16,8 @@ public class UIntegrationSendViaUDP {
     private final int PORT = 12345;
 
     public void main(String[] args) throws Exception {
-        UDPClient udpClient = new UDPClient(this.HOST, this.PORT, new ArrayList<byte[]>(List.of("fe".getBytes())));
-        udpClient.send();
+        UDPSender udpSender = new UDPSender(this.HOST, this.PORT, new ArrayList<byte[]>(List.of("fe".getBytes())));
+        udpSender.send();
         final String orderId = "Test";
         final String message = "test";
         final String type = "Test";
@@ -102,32 +102,8 @@ class DatagramPacketsCreator {
     }
 }
 
-// Класс для хранения заголовка данных.
-class DataHeader {
-    private final String guid;
-    // Параметр необходим для правильного декодирования.
-    // file, txt и т.д.
-    private final String type;
-    private final String orderId;
 
-    public DataHeader(String guid, String type, String orderId) {
-        this.guid = this.valueOrDefault(guid);
-        this.type = this.valueOrDefault(type);
-        this.orderId = this.valueOrDefault(orderId);
-    }
-
-    public String valueOrDefault(String value) {
-        if (value == null || value.isEmpty()) value = "";
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        // Возвращаем строку вида "GUID|type|orderId".
-        return String.join("|", this.guid, this.type, this.orderId);
-    }
-}
-
+/*
 // Класс для отправки пакетов.
 class Sender {
     private final String host;
@@ -151,7 +127,9 @@ class Sender {
     }
 }
 
-// Генератор уникальных идентификаторов UUID и GUID.
+*/
+
+/*
  class UniqueldentifierGenerator {
     private final String uuidAsStr;
 
@@ -177,3 +155,4 @@ class Sender {
     }
 }
 
+*/

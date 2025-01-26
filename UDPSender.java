@@ -4,12 +4,12 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.List;
 
-public class UDPClient implements ISend {
+public class UDPSender implements ISendable {
     private final String address;
     private final int port;
     private final List<byte[]> messagePackets;
 
-    public UDPClient(String address, int port, List<byte[]> messagePackets) {
+    public UDPSender(String address, int port, List<byte[]> messagePackets) {
         this.address = address;
         this.port = port;
         this.messagePackets = messagePackets;

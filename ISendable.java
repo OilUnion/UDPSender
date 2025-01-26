@@ -1,5 +1,5 @@
 import java.io.IOException;
 
-public interface ISend {
+public interface ISendable {
     void send () throws IOException;
 }
